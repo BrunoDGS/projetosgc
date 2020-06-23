@@ -1,0 +1,70 @@
+<div class="container">
+    <!-- Filtros -->
+
+    <div class="ui-g">
+        <div class="ui-g-2">
+          <a href="javascript:;" class="navbar-toggle" (click)="exibindoMenufiltro = !exibindoMenufiltro"><i class="pi pi-list" title="Filtros"></i></a>
+        </div>
+            <div class="ui-g-10">
+            <h3></h3>
+            <p></p>
+        </div>
+      </div>      
+    </div>
+    <div class="form-filtro">
+        <form class="navbar-menu-filtro" [hidden]="!exibindoMenufiltro" #usuarioForm = "ngForm">
+         
+            <p><u>Periodo</u></p>
+            
+            <p>Data Inicio</p><p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }"
+            name="FilterDtInicial" [(ngModel)]="FilterDtInicial" [required]="true" showIcon="true" #dtInicial = "ngModel"></p-calendar>
+            <div *ngIf="dtInicial.hasError('required')" style="color: red;">Informe a Data Inicial</div>
+            
+            <p>Data Fim</p><p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }"
+            name="FilterDtFinal" [(ngModel)]="FilterDtFinal" [required]="true" showIcon="true" #dtFim = "ngModel"></p-calendar>
+            <div *ngIf="dtFim.hasError('required')" style="color: red;">Informe a Data Final</div>
+            
+            <p><u>Filial</u></p>
+            <p><p-dropdown [options]="filiais" [filter]="true" filterBy="label" [(ngModel)]="FilterFilial" 
+              name="FilterFilial" #f></p-dropdown>
+            </p>
+            
+            <p-button class = "button-filtro" label="Iniciar" 
+            (click)="pesquisarPie()" 
+            (click)="pesquisarTabela()"
+            (click)="exibindoMenufiltro = !exibindoMenufiltro" 
+            type="submit"
+            [disabled]="!usuarioForm.valid">                
+          </p-button>
+            <p-button class = "button-filtro" label="Cancelar" routerLink="/vendas"></p-button>
+  
+        </form>
+    </div>      
+
+
+
+
+    <!-- Tabelas -->
+        <p-table [value]="titulos" [paginator]="true" [rows]="10">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Filial</th>
+                    <th>Número do Titulo</th>
+                    <th>Data Emissão</th>
+                    <th>Data Vencimento</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-col>
+                <tr>
+                    <th scope="row">{{col.filial}}</th>
+                    <td>{{col.numTitulo}}</td>
+                    <td>{{col.dataEmissao}}</td>
+                    <td>{{col.dataVencimento}}</td>
+                    <td [ngStyle] = "{color: col.valor === 220? 'red': 'blue'}">{{col.valor}}</td>
+                    <td [ngStyle] = "{color: col.dataVencimento === '2005-10-14'? 'red': 'blue'}">{{col.dataVencimento === '2005-10-14' ? 'VENCIDO' : 'DENTRO DO PRAZO'}}</td>               
+                </tr>
+            </ng-template>
+        </p-table>
+</div>

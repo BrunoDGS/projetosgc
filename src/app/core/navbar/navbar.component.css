@@ -1,0 +1,17 @@
+.nav-bar{
+    background-color:#008000 !important;
+    color: white !important;
+}
+.nav-bar a{
+    color: white;
+    text-decoration: none;
+}
+.nav-bar a:hover{
+    color: #00008B;
+}
+.nav-item {
+    font-size: 14px;
+}
+.navbar-toggler {
+    border: 1px solid white !important;
+}
